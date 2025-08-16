@@ -5,6 +5,7 @@ const options = {}
 
 let client
 let clientPromise: Promise<MongoClient>
+if (!uri && process.env.NODE_ENV === "production") throw new Error("MONGODB_URI is not set")
 
 if (!uri) throw new Error("MONGODB_URI is not set")
 
