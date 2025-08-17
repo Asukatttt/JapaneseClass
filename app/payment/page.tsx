@@ -1,10 +1,22 @@
 'use client'
 
+import { Suspense } from 'react'
+import PaymentComponent from './paymentComponent'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-export default function PaymentPage() {
+// Suspense でラップして default export にする
+export default function PaymentPageWrapper() {
+  return (
+    <Suspense fallback={<div className="text-center mt-20">Loading...</div>}>
+      <PaymentPage />
+    </Suspense>
+  )
+}
+
+// 実際のページコンポーネント
+function PaymentPage() {
   const searchParams = useSearchParams()
   const price = searchParams.get('price')
   const name = searchParams.get('name')
@@ -18,7 +30,6 @@ export default function PaymentPage() {
           <p className="text-2xl font-semibold mb-4">{name}</p>
           <p className="text-3xl font-bold mb-6">${price} / month</p>
 
-          {/* Wise決済 */}
           <a
             href="https://wise.com/pay/me/hiyoria14"
             target="_blank"
@@ -40,7 +51,6 @@ export default function PaymentPage() {
         <p className="text-2xl mb-6">No plan selected</p>
       )}
 
-      {/* ホームに戻るボタン */}
       <Link href="/">
         <motion.button
           className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
