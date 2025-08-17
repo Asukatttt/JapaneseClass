@@ -1,6 +1,7 @@
 // app/priceList/page.tsx
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -11,13 +12,15 @@ const fadeInUp = {
 }
 
 const coursesData = [
-  { name: '2 Lessons / Month', price: 5000, stripeUrl: 'https://buy.stripe.com/test_month2', color: 'bg-[#F9D1A9]', highlight: false },
-  { name: '4 Lessons / Month', price: 9000, stripeUrl: 'https://buy.stripe.com/test_month4', color: 'bg-[#B5EAD7]', highlight: true },
-  { name: '8 Lessons / Month', price: 16000, stripeUrl: 'https://buy.stripe.com/test_month8', color: 'bg-[#A8D8F0]', highlight: false },
+  { name: '2 Lessons / Month', price: 82, stripeUrl: 'https://buy.stripe.com/test_month2', color: 'bg-[#F9D1A9]', highlight: false },
+  { name: '4 Lessons / Month', price: 165, stripeUrl: 'https://buy.stripe.com/test_month4', color: 'bg-[#B5EAD7]', highlight: true },
+  { name: '8 Lessons / Month', price: 330, stripeUrl: 'https://buy.stripe.com/test_month8', color: 'bg-[#A8D8F0]', highlight: false },
+  { name: '12 Lessons / Month', price: 500, stripeUrl: 'https://buy.stripe.com/test_month12', color: 'bg-[#FFF3B0]', highlight: false },  
 ]
 
 export default function PriceListPage() {
   const [courses, setCourses] = useState<typeof coursesData>([])
+  const router = useRouter()
 
   useEffect(() => {
     setCourses(coursesData)
@@ -46,10 +49,12 @@ export default function PriceListPage() {
               </div>
             )}
             <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
-            <p className="text-3xl font-bold mb-6">¥{course.price.toLocaleString()}</p>
+            <p className="text-3xl font-bold mb-6">${course.price.toLocaleString()}</p>
             <p className="mb-8 text-gray-700">per month</p>
             <button
-              onClick={() => handleCheckout(course.stripeUrl)}
+              onClick={() =>
+                router.push(`/payment?price=${course.price}&name=${encodeURIComponent(course.name)}`)
+              }
               className="bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
             >
               Select Plan

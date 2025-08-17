@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
-import clientPromise from "../../../lib/mongodb"
+// import clientPromise from "../../../lib/mongodb"
 
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json()
+    
+    // --- DB操作は一時的にコメントアウト ---
+    /*
     const client = await clientPromise
     const db = client.db("ninjapanese")
     const collection = db.collection("reservations")
@@ -13,8 +16,9 @@ export async function POST(req: NextRequest) {
       email: data.email,
       date: new Date()
     })
+    */
 
-    return NextResponse.json({ message: "予約完了" }, { status: 201 })
+    return NextResponse.json({ message: "予約完了 (DB未使用)" }, { status: 201 })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 })
   }
