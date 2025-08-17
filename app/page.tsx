@@ -133,8 +133,7 @@ export default function Home() {
           {message && <p className="mt-4 text-green-600 text-center">{message}</p>}
         </div>
       </motion.section>
-
-      {/* SNS Links */}
+      {/* SNS Links + Email */}
       <motion.section
         className="py-20 bg-[#F2FAEF]"
         initial="hidden"
@@ -143,11 +142,12 @@ export default function Home() {
         variants={fadeInUp}
       >
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Follow Us on SNS</h2>
-          <div className="flex justify-center gap-10 text-3xl text-[#1D3658]">
+          <h2 className="text-3xl font-bold mb-8">Follow Us on SNS & Email</h2>
+          <div className="flex justify-center items-center gap-10 flex-wrap text-3xl text-[#1D3658]">
             <a href="https://www.instagram.com/your-account" target="_blank" className="hover:text-pink-500 transition-colors">Instagram</a>
             <a href="https://www.youtube.com/your-channel" target="_blank" className="hover:text-red-500 transition-colors">YouTube</a>
             <a href="https://lin.ee/your-line" target="_blank" className="hover:text-green-500 transition-colors">LINE</a>
+            <span className="text-xl font-bold text-[#1D3658]">hiyorijapaneseclass@gmail.com</span>
           </div>
         </div>
       </motion.section>

@@ -42,7 +42,7 @@ function PaymentPage() {
           <p className="text-lg text-red-600 font-semibold mt-6">
             After completing your payment, please contact me at the email below.
           </p>
-          <p className="text-2xl font-bold mt-2">support@example.com</p>
+          <p className="text-2xl font-bold mt-2">hiyorijapaneseclass@gmail.com</p>
           <p className="text-sm text-gray-500 mt-4">
             ※ This email address is also listed on the home page.
           </p>
