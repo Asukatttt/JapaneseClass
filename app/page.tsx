@@ -34,7 +34,7 @@ export default function Home() {
 
   const openCalendly = () => {
     if (typeof window !== 'undefined') {
-      window.open('https://calendly.com/app/scheduling/meeting_types/user/me', '_blank')
+      window.open('https://calendly.com/hiyorijapaneseclass/50-minutes-class', '_blank')
     }
   }
 
