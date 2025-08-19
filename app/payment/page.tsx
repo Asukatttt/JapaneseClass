@@ -1,12 +1,11 @@
 'use client'
 
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import PaymentComponent from './paymentComponent'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 
-// Suspense でラップして default export にする
 export default function PaymentPageWrapper() {
   return (
     <Suspense fallback={<div className="text-center mt-20">Loading...</div>}>
@@ -15,11 +14,23 @@ export default function PaymentPageWrapper() {
   )
 }
 
-// 実際のページコンポーネント
 function PaymentPage() {
   const searchParams = useSearchParams()
   const price = searchParams.get('price')
   const name = searchParams.get('name')
+  const [copied, setCopied] = useState(false)
+
+  const email = "hiyorijapaneseclass@gmail.com"
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error("Failed to copy email:", err)
+    }
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2FAEF] text-[#1D3658] px-6">
@@ -39,10 +50,26 @@ function PaymentPage() {
             Pay with Wise
           </a>
 
-          <p className="text-lg text-red-600 font-semibold mt-6">
+          <p className="text-lg text-black-600 font-semibold mt-6">
             After completing your payment, please contact me at the email below.
           </p>
-          <p className="text-2xl font-bold mt-2">hiyorijapaneseclass@gmail.com</p>
+
+          {/* メールアドレス表示部分 */}
+          <div className="mt-4 bg-[#FFF5F5] border-2 border-red-400 rounded-xl p-6 shadow-md flex flex-col items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl">📧</span>
+              <p className="text-xl font-bold text-black">{email}</p>
+            </div>
+
+            {/* Copyボタン（枠内に収める） */}
+            <button
+              onClick={handleCopy}
+              className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition"
+            >
+              {copied ? "Copied!" : "Copy Email"}
+            </button>
+          </div>
+
           <p className="text-sm text-gray-500 mt-4">
             ※ This email address is also listed on the home page.
           </p>
