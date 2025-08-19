@@ -49,17 +49,19 @@ export default function PriceListPage() {
                 Recommended
               </div>
             )}
-            <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
-            <p className="text-3xl font-bold mb-6">${course.price.toLocaleString()}</p>
-            <p className="mb-8 text-gray-700">per month</p>
-            <button
-              onClick={() =>
-                router.push(`/payment?price=${course.price}&name=${encodeURIComponent(course.name)}`)
-              }
-              className="bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
-            >
-              Select Plan
-            </button>
+          <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
+          <p className="text-3xl font-bold mb-6">${course.price.toLocaleString()}</p>
+          <p className="mb-8 text-gray-700">
+            {course.name.includes('Trial') ? 'one-time only' : 'per month'}
+          </p>
+          <button
+            onClick={() =>
+              router.push(`/payment?price=${course.price}&name=${encodeURIComponent(course.name)}`)
+            }
+            className="bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
+          >
+            Select Plan
+          </button>
           </motion.div>
         ))}
       </div>
