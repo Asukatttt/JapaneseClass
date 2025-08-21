@@ -15,7 +15,7 @@ const coursesData = [
   { name: '2 Lessons / Month', price: 82, stripeUrl: 'https://buy.stripe.com/test_month2', color: 'bg-[#F9D1A9]', highlight: false },
   { name: '4 Lessons / Month', price: 165, stripeUrl: 'https://buy.stripe.com/test_month4', color: 'bg-[#B5EAD7]', highlight: true },
   { name: '8 Lessons / Month', price: 330, stripeUrl: 'https://buy.stripe.com/test_month8', color: 'bg-[#A8D8F0]', highlight: false },
-  { name: '12 Lessons / Month', price: 500, stripeUrl: 'https://buy.stripe.com/test_month12', color: 'bg-[#FFF3B0]', highlight: false },
+  { name: '12 Lessons / Month', price: 495, stripeUrl: 'https://buy.stripe.com/test_month12', color: 'bg-[#FFF3B0]', highlight: false },
   { name: 'Trial Lesson / 30 minutes', price: 20, stripeUrl: 'https://buy.stripe.com/test_trial', color: 'bg-[#FDE2E4]', highlight: false }, // 薄い赤
   ]
 
