@@ -4,7 +4,13 @@ import nodemailer from 'nodemailer'
 
 export async function POST(req: Request) {
   try {
-    const { name, email, date, message } = await req.json()
+    const { name, email, message } = await req.json()
+
+    // 環境変数の確認
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('環境変数が設定されていません')
+      return NextResponse.json({ success: false, message: 'Environment variables are missing' }, { status: 500 })
+    }
 
     // Gmail SMTP 設定
     const transporter = nodemailer.createTransport({
@@ -23,7 +29,6 @@ export async function POST(req: Request) {
       text: `
         Name: ${name}
         Email: ${email}
-        Date: ${date}
         Message: ${message}
       `,
     })
