@@ -21,14 +21,13 @@ export default function Home() {
   const [statusMessage, setStatusMessage] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [date, setDate] = useState('')
   const [message, setMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     const res = await fetch('/api/reserve', {
       method: 'POST',
-      body: JSON.stringify({ name, email, date, message: userMessage }),
+      body: JSON.stringify({ name, email, message: userMessage }),
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await res.json()
