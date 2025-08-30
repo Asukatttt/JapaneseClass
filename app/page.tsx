@@ -3,6 +3,8 @@ import { useState } from 'react'
 import Head from 'next/head'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { NextApiRequest, NextApiResponse } from 'next'
+import nodemailer from 'nodemailer'
 declare global {
   interface Window {
     Calendly?: any
@@ -15,6 +17,8 @@ const fadeInUp = {
 }
 
 export default function Home() {
+  const [userMessage, setUserMessage] = useState('')
+  const [statusMessage, setStatusMessage] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [date, setDate] = useState('')
@@ -24,12 +28,12 @@ export default function Home() {
     e.preventDefault()
     const res = await fetch('/api/reserve', {
       method: 'POST',
-      body: JSON.stringify({ name, email, date }),
+      body: JSON.stringify({ name, email, date, message: userMessage }),
       headers: { 'Content-Type': 'application/json' },
     })
     const data = await res.json()
-    if (data.success) setMessage('Reservation completed successfully!')
-    else setMessage('Reservation failed.')
+    if (data.success) setStatusMessage('Reservation completed successfully!')
+    else setStatusMessage('Reservation failed.')
   }
 
   const openCalendly = () => {
@@ -143,8 +147,8 @@ export default function Home() {
             />
             <textarea
               placeholder="Your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={userMessage}
+              onChange={(e) => setUserMessage(e.target.value)}
               className="border p-3 rounded-lg resize-none"
               rows={5}
               required
@@ -156,7 +160,7 @@ export default function Home() {
               Send
             </button>
           </form>
-          {message && <p className="mt-4 text-green-600 text-center">{message}</p>}
+          {statusMessage && <p className="mt-4 text-green-600 text-center">{statusMessage}</p>}
         </div>
       </motion.section>
       {/* SNS Links + Email */}
