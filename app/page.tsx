@@ -166,39 +166,16 @@ export default function Home() {
         variants={fadeInUp}
       >
         <div className="container mx-auto px-6 max-w-lg bg-[#F9D1A9] rounded-xl p-10 shadow-xl">
-          <h2 className="text-3xl font-bold mb-6 text-center text-[#1D3658]">Contact Form</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="border p-3 rounded-lg"
-              required
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border p-3 rounded-lg"
-              required
-            />
-            <textarea
-              placeholder="Your message"
-              value={userMessage}
-              onChange={(e) => setUserMessage(e.target.value)}
-              className="border p-3 rounded-lg resize-none"
-              rows={5}
-              required
-            />
-            <button
-              type="submit"
-              className="bg-[#1D3658] text-[#F2FAEF] p-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
+          <h2 className="text-3xl font-bold mb-6 text-center text-[#1D3658]">Contact me</h2>
+          {/* メール */}
+          <div className="text-center">
+            <a
+              href="mailto:hiyorijapaneseclass@gmail.com"
+              className="text-[#1D3658] text-xl font-bold hover:text-blue-500 transition-colors"
             >
-              Send
-            </button>
-          </form>
+              hiyorijapaneseclass@gmail.com
+            </a>
+          </div>
           {statusMessage && <p className="mt-4 text-green-600 text-center">{statusMessage}</p>}
         </div>
       </motion.section>
@@ -211,23 +188,13 @@ export default function Home() {
         variants={fadeInUp}
       >
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-8">Follow Us on SNS & Email</h2>
+          <h2 className="text-3xl font-bold mb-8">Follow Us on SNS</h2>
 
           {/* SNSリンク */}
           <div className="flex justify-center items-center gap-10 flex-wrap text-3xl text-[#1D3658] mb-6">
             <a href="https://www.instagram.com/your-account" target="_blank" className="hover:text-pink-500 transition-colors">Instagram</a>
             <a href="https://www.youtube.com/your-channel" target="_blank" className="hover:text-red-500 transition-colors">YouTube</a>
-            <a href="https://lin.ee/your-line" target="_blank" className="hover:text-green-500 transition-colors">LINE</a>
-          </div>
-
-          {/* メール */}
-          <div>
-            <a
-              href="mailto:hiyorijapaneseclass@gmail.com"
-              className="text-[#1D3658] text-xl font-bold hover:text-blue-500 transition-colors"
-            >
-              hiyorijapaneseclass@gmail.com
-            </a>
+            <a href="https://www.tiktok.com/@your-account" target="_blank" className="hover:text-pink-400 transition-colors">TikTok</a>
           </div>
         </div>
       </motion.section>
