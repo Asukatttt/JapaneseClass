@@ -1,0 +1,7 @@
+node_modules
+.next
+.env.local
+.DS_Store
+# 動画ファイル除外
+public/images/website.mp4public/images/website.mp4
+public/images/website.mp4
