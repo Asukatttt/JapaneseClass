@@ -192,9 +192,9 @@ export default function Home() {
 
           {/* SNSリンク */}
           <div className="flex justify-center items-center gap-10 flex-wrap text-3xl text-[#1D3658] mb-6">
-            <a href="https://www.instagram.com/your-account" target="_blank" className="hover:text-pink-500 transition-colors">Instagram</a>
-            <a href="https://www.youtube.com/your-channel" target="_blank" className="hover:text-red-500 transition-colors">YouTube</a>
-            <a href="https://www.tiktok.com/@your-account" target="_blank" className="hover:text-pink-400 transition-colors">TikTok</a>
+            <a href="https://www.instagram.com/sakura_hiyori_japan" target="_blank" className="hover:text-pink-500 transition-colors">Instagram</a>
+            <a href="https://www.youtube.com/@Sakura_hiyori_japan" target="_blank" className="hover:text-red-500 transition-colors">YouTube</a>
+            <a href="https://www.tiktok.com/@sakura_hiyori_jap" target="_blank" className="hover:text-pink-400 transition-colors">TikTok</a>
           </div>
         </div>
       </motion.section>
