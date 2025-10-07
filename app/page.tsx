@@ -68,14 +68,26 @@ export default function Home() {
           >
             Learn Japanese naturally and have fun!
           </motion.p>
-          <motion.button 
-            onClick={openCalendly} 
-            className="bg-[#F2FAEF] text-[#1D3658] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.4 } }}
-          >
-            Book a Lesson
-          </motion.button>
+
+          <div className="flex gap-4">
+            <motion.button 
+              onClick={openCalendly} 
+              className="min-w-[200px] bg-[#F2FAEF] text-[#1D3658] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.4 } }}
+            >
+              Book a Lesson
+            </motion.button>
+
+            <motion.button 
+              onClick={openCalendly} 
+              className="min-w-[200px] bg-[#FFE5E5] text-[#990000] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.4 } }}
+            >
+              Book a Trial Lesson
+            </motion.button>
+          </div>
           <Link href="/priceList">
             <motion.button
               className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform mt-20"
