@@ -40,6 +40,11 @@ export default function Home() {
       window.open('https://calendly.com/hiyorijapaneseclass/50-minutes-class', '_blank')
     }
   }
+  const trialPricePage = () => {
+    if (typeof window !== 'undefined') {
+      window.open('https://calendly.com/hiyorijapaneseclass/50-minutes-class', '_blank')
+    }
+  }
 
   return (
     <>
@@ -78,16 +83,16 @@ export default function Home() {
             >
               Book a Lesson
             </motion.button>
-
-            <motion.button 
-              onClick={openCalendly} 
-              className="min-w-[200px] bg-[#FFE5E5] text-[#990000] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
+          </div>
+          <Link href="/priceList/trialPage">
+            <motion.button
+              className="mt-10 min-w-[200px] bg-[#FFE5E5] text-[#990000] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.4 } }}
             >
-              Book a Trial Lesson
+              Trial Lesson
             </motion.button>
-          </div>
+          </Link>
           <Link href="/priceList">
             <motion.button
               className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform mt-20"
