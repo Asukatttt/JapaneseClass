@@ -60,7 +60,7 @@ export default function PriceListPage() {
             }
             className="bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
           >
-            Select Plan
+             Pay now
           </button>
         </motion.div>
       ))}
