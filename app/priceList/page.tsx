@@ -50,7 +50,9 @@ export default function PriceListPage() {
               </div>
             )}
           <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
-          <p className="text-3xl font-bold mb-6">${course.price.toLocaleString()}</p>
+          <p className="text-3xl font-bold mb-6">
+            ${course.price.toLocaleString()} <span className="text-base font-normal">USD</span>
+          </p>
           <p className="mb-8 text-gray-700">
             {course.name.includes('Trial') ? 'one-time only' : 'per month'}
           </p>
