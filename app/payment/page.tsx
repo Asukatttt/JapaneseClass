@@ -80,7 +80,7 @@ function PaymentPage() {
         <p className="text-2xl mb-6">No plan selected</p>
       )}
 
-      <Link href="/priceList">
+      <Link href={name?.includes('Trial') ? '/priceList/trialPage' : '/priceList'}>
         <motion.button
           className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
           initial={{ opacity: 0, scale: 0.8 }}

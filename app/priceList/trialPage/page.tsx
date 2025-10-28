@@ -81,22 +81,22 @@ export default function PriceListPage() {
         </div>
         <a
           href="mailto:hiyorijapaneseclass@gmail.com"
-          className="text-red-600 text-3xl font-extrabold hover:text-blue-500 transition-colors"
+          className="text-red-600 text-2xl md:text-3xl font-extrabold hover:text-blue-500 transition-colors break-words whitespace-normal max-w-full"
         >
           hiyorijapaneseclass@gmail.com
         </a>
       </div>
       {/* {statusMessage && <p className="mt-4 text-green-600 text-center">{statusMessage}</p>} */}
     </div>
-      {/* ホームに戻るボタン（画面左上に固定） */}
-      <div className="fixed top-6 left-6 z-50">
+      {/* ホームに戻るボタン */}
+      <div className="text-center">
         <Link href="/top">
           <motion.button
-            className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-4 py-2 rounded-lg shadow hover:bg-[#447A9C] transition text-base"
+            className="mt-5 bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.2 } }}
           >
-            Back to Home
+            Back to Page
           </motion.button>
         </Link>
       </div>
