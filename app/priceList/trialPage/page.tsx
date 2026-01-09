@@ -16,7 +16,7 @@ const coursesData = [
 //   { name: '4 Lessons / Month', price: 165, stripeUrl: 'https://buy.stripe.com/test_month4', color: 'bg-[#B5EAD7]', highlight: false },
 //   { name: '8 Lessons / Month', price: 328, stripeUrl: 'https://buy.stripe.com/test_month8', color: 'bg-[#A8D8F0]', highlight: true },
 //   { name: '12 Lessons / Month', price: 490, stripeUrl: 'https://buy.stripe.com/test_month12', color: 'bg-[#FFF3B0]', highlight: false },
-  { name: 'Trial Lesson / 50 minutes', price: 25, stripeUrl: 'https://buy.stripe.com/test_trial', color: 'bg-[#FDE2E4]', highlight: false },
+  { name: 'Trial Lesson / 50 minutes', price: 10, stripeUrl: 'https://buy.stripe.com/test_trial', color: 'bg-[#FDE2E4]', highlight: false },
   ]
 
 export default function PriceListPage() {
