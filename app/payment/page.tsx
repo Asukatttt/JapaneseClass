@@ -22,6 +22,19 @@ function PaymentPage() {
 
   const email = "hiyorijapaneseclass@gmail.com"
 
+  // Read stripe URL from query param if provided (preference), otherwise map by plan name
+  const stripeParam = searchParams.get('stripe') || searchParams.get('stripeUrl')
+
+  const stripeMap: Record<string, string> = {
+    '2 Lessons / Month': 'https://buy.stripe.com/test_cNieVfezH8ZP1mYdRd24001',
+    '4 Lessons / Month': 'https://buy.stripe.com/test_5kQeVf2QZ0tj1mY14r24002',
+    '8 Lessons / Month': 'https://buy.stripe.com/test_bJe6oJfDLa3T3v65kH24003',
+    '12 Lessons / Month': 'https://buy.stripe.com/test_28E00l0IR5NDc1C14r24004',
+    'Trial Lesson / 50 minutes': 'https://buy.stripe.com/test_fZueVfbnvgsh7Lm6oL24000',
+  }
+
+  const checkoutUrl = stripeParam || (name ? stripeMap[name] : undefined)
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(email)
@@ -43,14 +56,18 @@ function PaymentPage() {
           ${price} {name?.includes('Trial') ? '/ one-time' : '/ month'}
         </p>
 
-        <a
-          href="https://wise.com/pay/me/hiyoria14"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition mb-4"
-        >
-          Pay with Wise
-        </a>
+        {checkoutUrl ? (
+          <a
+            href={checkoutUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition mb-4"
+          >
+            Proceed to checkout
+          </a>
+        ) : (
+          <div className="block bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold mb-4">No checkout URL available for this plan.</div>
+        )}
 
           <p className="text-lg text-black-600 font-semibold mt-6">
             After completing your payment, please contact me at the email below.

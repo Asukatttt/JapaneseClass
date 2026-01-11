@@ -1,32 +1,29 @@
 // app/priceList/page.tsx
-'use client'
+"use client"
 
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
 }
 
-const coursesData = [
-//   { name: '2 Lessons / Month', price: 84, stripeUrl: 'https://buy.stripe.com/test_month2', color: 'bg-[#F9D1A9]', highlight: false },
-//   { name: '4 Lessons / Month', price: 165, stripeUrl: 'https://buy.stripe.com/test_month4', color: 'bg-[#B5EAD7]', highlight: false },
-//   { name: '8 Lessons / Month', price: 328, stripeUrl: 'https://buy.stripe.com/test_month8', color: 'bg-[#A8D8F0]', highlight: true },
-//   { name: '12 Lessons / Month', price: 490, stripeUrl: 'https://buy.stripe.com/test_month12', color: 'bg-[#FFF3B0]', highlight: false },
-  { name: 'Trial Lesson / 50 minutes', price: 10, stripeUrl: 'https://buy.stripe.com/test_trial', color: 'bg-[#FDE2E4]', highlight: false },
-  ]
+// Single hard-coded trial course (includes both Stripe and Wise links)
+const course = {
+  name: 'Trial Lesson / 50 minutes',
+  price: 10,
+  // testデータ用
+  // stripeUrl: 'https://buy.stripe.com/test_3cIfZjeBW7gU1hl9ey6EU02',
+
+  // 正規データ
+  stripeUrl: 'https://buy.stripe.com/dRmaEZ51m7gU6BFeyS6EU04',
+  wiseUrl: 'https://wise.com/pay/me/hiyoria14',
+  color: 'bg-[#FDE2E4]',
+  highlight: false,
+}
 
 export default function PriceListPage() {
-  const [courses, setCourses] = useState<typeof coursesData>([])
-  const router = useRouter()
-
-  useEffect(() => {
-    setCourses(coursesData)
-  }, [])
-
   const handleCheckout = (url: string) => window.open(url, '_blank')
 
   return (
@@ -34,38 +31,41 @@ export default function PriceListPage() {
     <h1 className="text-6xl font-bold text-center mb-12">Trial Lesson</h1>
     <h2 className="text-2xl font-bold text-center mb-12">Enjoy Speaking  Japanese with Hiyori sensei! </h2>
     <div className="max-w-5xl w-full flex justify-center mb-16">
-      {courses.map((course, i) => (
-        <motion.div
-          key={i}
-          className={`p-8 rounded-2xl shadow-md text-center cursor-pointer transition-transform hover:scale-105 relative
+      <motion.div
+        className={`p-8 rounded-2xl shadow-md text-center cursor-pointer transition-transform hover:scale-105 relative
             ${course.color} ${course.highlight ? 'border-4 border-[#1D3658] shadow-xl' : ''}`}
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          transition={{ delay: i * 0.2 }}
-        >
-          {course.highlight && (
-            <div className="absolute top-[-14px] left-1/2 transform -translate-x-1/2 bg-[#1D3658] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md">
-              Recommended
-            </div>
-          )}
-          <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
-          <p className="text-3xl font-bold mb-6">
-            ${course.price.toLocaleString()} <span className="text-base font-normal">USD</span>
-          </p>
-          <p className="mb-8 text-gray-700">
-            {course.name.includes('Trial') ? 'one-time only' : 'per month'}
-          </p>
+        initial="hidden"
+        animate="visible"
+        variants={fadeInUp}
+        transition={{ delay: 0 }}
+      >
+        {course.highlight && (
+          <div className="absolute top-[-14px] left-1/2 transform -translate-x-1/2 bg-[#1D3658] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md">
+            Recommended
+          </div>
+        )}
+        <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
+        <p className="text-3xl font-bold mb-6">
+          ${course.price.toLocaleString()} <span className="text-base font-normal">USD</span>
+        </p>
+        <p className="mb-8 text-gray-700">
+          {course.name.includes('Trial') ? 'one-time only' : 'per month'}
+        </p>
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
           <button
-            onClick={() =>
-              router.push(`/payment?price=${course.price}&name=${encodeURIComponent(course.name)}`)
-            }
-            className="bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
+            onClick={() => handleCheckout(course.stripeUrl)}
+            className="min-w-[140px] bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
           >
-             Pay now
+            Pay Stripe
           </button>
-        </motion.div>
-      ))}
+          <button
+            onClick={() => handleCheckout(course.wiseUrl)}
+            className="min-w-[140px] bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
+          >
+            Pay Wise
+          </button>
+        </div>
+      </motion.div>
     </div>
   <div className="mt-1 container mx-auto px-4 max-w-2xl bg-[#F9D1A9] rounded-xl p-6 shadow-xl">
       <h2 className="text-2xl font-bold mb-6 text-center text-[#1D3658]">
