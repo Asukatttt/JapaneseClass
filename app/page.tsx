@@ -21,7 +21,7 @@ export default function Home() {
         </Link>
 
         {/* Japan Tour */}
-        <Link href="/japanTour" className="w-full">
+        <Link href="/guidePage" className="w-full">
           <div className="bg-[#F9D1A9] text-[#1D3658] px-10 py-6 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all text-2xl font-semibold text-center">
             Japan Tour
           </div>
