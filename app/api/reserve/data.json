@@ -2,10 +2,10 @@
   "tours": [
     {
       "id": "tokyo-highlights(4-hours)",
-      "title": "Private Tokyo Guide Tour (4 hours)",
+      "title": "Private Tokyo highlights tour with Hiyori",
       "duration": "4 hours",
       "price": 30000,
-      "description": "I will arrange a tour based on your interest (Guide by Hiyori).",
+      "description": "Tsukiji → Asakusa → Shibuya → Harajuku → Meiji Shrine → Shinjuku",
       "details": [
         "Pick-up in central Tokyo",
         "Local snacks included",
@@ -14,10 +14,34 @@
     },
     {
       "id": "tokyo-highlights(6-hours)",
-      "title": "Private Tokyo Guide Tour (7 hours)",
+      "title": "Hiyori’s favorite Tokyo tour (reccomend for 2nd visit guests)",
       "duration": "7 hours",
       "price": 50000,
-      "description": "I will arrange a tour based on your interest (Guide by Hiyori).",
+      "description": "Edo-Tokyo Museum → Monzen-Nakacho → Nakano",
+      "details": [
+        "Lunch at a local restaurant",
+        "Public transport pass included",
+        "Guided tea ceremony"
+      ]
+    },
+    {
+      "id": "tokyo-highlights(6-hours)",
+      "title": "Local bar hopping tour with Hiyori",
+      "duration": "7 hours",
+      "price": 50000,
+      "description": "Personalized Tokyo Tours Based on Your Interests with Hiyori.",
+      "details": [
+        "Lunch at a local restaurant",
+        "Public transport pass included",
+        "Guided tea ceremony"
+      ]
+    },
+    {
+      "id": "tokyo-highlights(6-hours)",
+      "title": "Day trip to surverb tour with Hiyori",
+      "duration": "7 hours",
+      "price": 50000,
+      "description": "Day Trips from Tokyo (Hakone, Nikko, Kamakura & Narita) with Hiyori",
       "details": [
         "Lunch at a local restaurant",
         "Public transport pass included",
