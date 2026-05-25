@@ -13,9 +13,9 @@ interface Tour {
 }
 
 const defaultImages = [
-  "/images/491243_m.jpg",
   "/images/30817709_m.jpg",
   "/images/34107071_m.jpg",
+  "/images/491243_m.jpg",
   "/images/shibamata.jpg",
 ];
 
