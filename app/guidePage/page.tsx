@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Script from 'next/script';
 
 interface Tour {
   id: string;
@@ -44,6 +45,14 @@ export default function JapanTour() {
 
   return (
     <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 1rem", fontFamily: "system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial" }}>
+      {/* gtag via Next.js Script to ensure it loads client-side after interactive */}
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-2FT8CFF75J" strategy="afterInteractive" />
+      <Script id="gtag-init" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);} 
+        gtag('js', new Date());
+        gtag('config', 'G-2FT8CFF75J');
+      ` }} />
 
       {/* HERO */}
       <div style={{ position: "relative", borderRadius: 8, overflow: "hidden" }}>
