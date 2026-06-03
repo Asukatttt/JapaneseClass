@@ -13,11 +13,11 @@
       ]
     },
     {
-      "id": "tokyo-highlights(6-hours)",
+      "id": "tokyo-favorites(7-hours)",
       "title": "Hiyori’s favorite Tokyo tour (reccomend for 2nd visit guests)",
       "duration": "7 hours",
       "price": 50000,
-      "description": "Edo-Tokyo Museum → Monzen-Nakacho → Nakano",
+      "description": "Example: Edo-Tokyo Museum → Monzen-Nakacho → Nakano",
       "details": [
         "Lunch at a local restaurant",
         "Public transport pass included",
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "id": "tokyo-highlights(6-hours)",
+      "id": "tokyo-barhop(7-hours)",
       "title": "Local bar hopping tour with Hiyori",
       "duration": "7 hours",
       "price": 50000,
@@ -37,10 +37,10 @@
       ]
     },
     {
-      "id": "tokyo-highlights(6-hours)",
+      "id": "tokyo-daytrip(10-hours)",
       "title": "Day trip to surverb tour with Hiyori",
-      "duration": "7 hours",
-      "price": 50000,
+      "duration": "10 hours",
+      "price": 70000,
       "description": "Day Trips from Tokyo (Hakone, Nikko, Kamakura & Narita) with Hiyori",
       "details": [
         "Lunch at a local restaurant",
