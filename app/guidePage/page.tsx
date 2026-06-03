@@ -226,7 +226,7 @@ export default function JapanTour() {
                     <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
                       <a
                         href={`mailto:hiyorijapaneseclass@gmail.com?subject=${encodeURIComponent(quickLabel)}`}
-                        style={{ display: "inline-block", background: "#10A37F", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}
+                        style={{ display: "inline-block", background: "#f88102ff", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}
                       >
                         Send reservation email
                       </a>
