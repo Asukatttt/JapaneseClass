@@ -83,7 +83,7 @@ export default function JapanTour() {
       {/* INTRO */}
       <section style={{ maxWidth: 900, margin: "0 auto", padding: "2.5rem 0 0 0", textAlign: "center" }}>
         <h2 style={{ margin: 0, fontSize: "clamp(1.05rem, 2.6vw, 1.5rem)", fontWeight: 700 }}>
-          Choose one of our curated tours
+          Please choose your favorite tour
         </h2>
         <p style={{ margin: "0.5rem 0 0 0", fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)",fontWeight: 700  }}>
           To make a reservation, please click the email button below.
@@ -177,7 +177,11 @@ export default function JapanTour() {
 
                 {/* Price: always centered; show the two-line combined block (first two tours) for every card when available */}
                 <div style={{ marginTop: 12, width: "100%", flexShrink: 0, display: "flex", justifyContent: "center" }}>
-                  {tours && tours.length >= 2 ? (
+                  {t.id === "tokyo-daytrip(10-hours)" ? (
+                    <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
+                      <div style={{ display: "block", textAlign: "center" }}>{priceText}</div>
+                    </div>
+                  ) : tours && tours.length >= 2 ? (
                     <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
                       <div style={{ display: "block", textAlign: "center" }}>{formatTour(tours[0])}</div>
                       <div style={{ display: "block", marginTop: 6, textAlign: "center" }}>{formatTour(tours[1])}</div>
