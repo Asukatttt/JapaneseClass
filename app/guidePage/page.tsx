@@ -198,6 +198,61 @@ export default function JapanTour() {
         })}
       </div>
 
+      {/* Featured quick-contact row (horizontal) */}
+      <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: "1.5rem" }}>
+        {(tours && tours.length) ? (
+              tours.slice(0, 2).map((ct, ci) => {
+                // requested short labels per card
+                const quickLabel = ci === 0 ? "Make itinerary for your trip" : "AirPort pick up service";
+                // create the sub-lines; first card: two pricing options, second card: airport details
+                const quickSub = ci === 0 ? (
+                  <>
+                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>~ 3 days JPY ¥{Number(10000).toLocaleString('ja-JP')}</div>
+                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>~ 7 days JPY ¥{Number(20000).toLocaleString('ja-JP')}</div>
+                  </>
+                ) : (
+                  <>
+                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>AirPort - Hotel</div>
+                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>JPY ¥{Number(20000).toLocaleString('ja-JP')} + transportation fee</div>
+                  </>
+                );
+                return (
+                  <div key={ct.id} style={{ width: 300, minWidth: 220, borderRadius: 12, overflow: "hidden", background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 6px 18px rgba(13,34,56,0.04)", display: "flex", flexDirection: "column", alignItems: "center", padding: 12 }}>
+                    {/* images intentionally removed per request */}
+                    <div style={{ padding: "12px 6px", textAlign: "center", flex: 1 }}>
+                      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#1D3658" }}>{quickLabel}</div>
+                      {quickSub}
+                    </div>
+                    <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
+                      <a
+                        href={`mailto:hiyorijapaneseclass@gmail.com?subject=${encodeURIComponent(quickLabel)}`}
+                        style={{ display: "inline-block", background: "#10A37F", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}
+                      >
+                        Send reservation email
+                      </a>
+                    </div>
+                  </div>
+                );
+              })
+        ) : (
+          // fallback placeholders
+          [1,2].map((n) => (
+            <div key={n} style={{ width: 300, minWidth: 220, borderRadius: 12, overflow: "hidden", background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 6px 18px rgba(13,34,56,0.04)", display: "flex", flexDirection: "column", alignItems: "center", padding: 12 }}>
+              <div style={{ width: "100%", height: 110, position: "relative", overflow: "hidden", borderRadius: 8, background: '#efefef' }} />
+              <div style={{ padding: "12px 6px", textAlign: "center", flex: 1 }}>
+                <div style={{ fontWeight: 700, fontSize: "1rem", color: "#1D3658" }}>Sample tour</div>
+                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>Duration</div>
+              </div>
+              <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
+                <a style={{ display: "inline-block", background: "#10A37F", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}>
+                  Send reservation email
+                </a>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Coming soon list (inserted above contact box) */}
       <div style={{ maxWidth: 600, margin: "2rem auto", padding: 24, background: "#fffef6", borderRadius: 12, textAlign: "left", boxShadow: "0 6px 18px rgba(8,8,9,0.04)", display: "flex", flexDirection: "column", gap: 12 }}>
         <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 800, color: "#1D3658", textAlign: "center" }}>Coming soon!</h3>
