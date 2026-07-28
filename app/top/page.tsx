@@ -80,7 +80,7 @@ export default function Home() {
             Learn Japanese naturally and have fun!
           </motion.p>
 
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <motion.button 
               onClick={openCalendly} 
               className="min-w-[200px] bg-[#F2FAEF] text-[#1D3658] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
@@ -89,7 +89,7 @@ export default function Home() {
             >
               Book a Lesson
             </motion.button>
-          </div>
+          </div> */}
           <Link href="/priceList/trialPage">
             <motion.button
               className="mt-10 min-w-[200px] bg-[#FFE5E5] text-[#990000] text-base font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform whitespace-nowrap text-center"
