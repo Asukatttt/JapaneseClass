@@ -8,7 +8,7 @@ export default function Home() {
         Welcome!
       </h1>
       <p className="text-lg mb-12 text-[#1D3658]/80 text-center">
-        Learn Japanese & Explore Japan 🇯🇵
+        Japanese Lesson & Private Tour 🇯🇵
       </p>
 
       {/* ボタンエリア */}
@@ -23,7 +23,7 @@ export default function Home() {
         {/* Japan Tour */}
         <Link href="/guidePage" className="w-full">
           <div className="bg-[#F9D1A9] text-[#1D3658] px-10 py-6 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all text-2xl font-semibold text-center">
-            Japan Tour
+            Private Tour
           </div>
         </Link>
       </div>
