@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Script from 'next/script';
 
 interface Tour {
@@ -53,6 +54,25 @@ export default function JapanTour() {
         gtag('js', new Date());
         gtag('config', 'G-2FT8CFF75J');
       ` }} />
+
+      {/* Back to Home Button */}
+      <div style={{ padding: "1rem 0" }}>
+        <Link
+          href="/"
+          style={{
+            display: "inline-block",
+            background: "#1D3658",
+            color: "#ffffff",
+            padding: "8px 16px",
+            borderRadius: 8,
+            textDecoration: "none",
+            fontWeight: 600,
+            fontSize: "0.95rem",
+          }}
+        >
+          Back to Home
+        </Link>
+      </div>
 
       {/* HERO */}
       <div style={{ position: "relative", borderRadius: 8, overflow: "hidden" }}>
