@@ -150,12 +150,18 @@ export default function JapanTour() {
                   transition: "transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms cubic-bezier(.2,.9,.2,1)",
                 }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-8px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 14px 40px rgba(13,34,56,0.12)";
+                const article = e.currentTarget as HTMLElement;
+                const img = article.querySelector("img");
+                article.style.transform = "translateY(-8px)";
+                article.style.boxShadow = "0 14px 40px rgba(13,34,56,0.12)";
+                if (img) img.style.transform = "scale(1.10)";
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 6px 20px rgba(13,34,56,0.06)";
+                const article = e.currentTarget as HTMLElement;
+                const img = article.querySelector("img");
+                article.style.transform = "translateY(0)";
+                article.style.boxShadow = "0 6px 20px rgba(13,34,56,0.06)";
+                if (img) img.style.transform = "scale(1)";
               }}
             >
               {/* Image */}
@@ -163,7 +169,16 @@ export default function JapanTour() {
                 <img
                   src={imgSrc}
                   alt={t.title || "Tour image"}
-                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    transition: "transform 240ms ease",
+                    transform: "scale(1)",
+                    willChange: "transform",
+                  }}
                 />
               </div>
 
@@ -237,7 +252,33 @@ export default function JapanTour() {
                   </>
                 );
                 return (
-                  <div key={ct.id} style={{ width: 300, minWidth: 220, borderRadius: 12, overflow: "hidden", background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 6px 18px rgba(13,34,56,0.04)", display: "flex", flexDirection: "column", alignItems: "center", padding: 12 }}>
+                  <div
+                    key={ct.id}
+                    style={{
+                      width: 300,
+                      minWidth: 220,
+                      borderRadius: 12,
+                      overflow: "hidden",
+                      background: "#fff",
+                      border: "1px solid rgba(0,0,0,0.06)",
+                      boxShadow: "0 6px 18px rgba(13,34,56,0.04)",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      padding: 12,
+                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                      transform: "translateY(0)",
+                      willChange: "transform",
+                    }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px)";
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 14px 28px rgba(13,34,56,0.10)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 18px rgba(13,34,56,0.04)";
+                    }}
+                  >
                     {/* images intentionally removed per request */}
                     <div style={{ padding: "12px 6px", textAlign: "center", flex: 1 }}>
                       <div style={{ fontWeight: 700, fontSize: "1rem", color: "#1D3658" }}>{quickLabel}</div>
@@ -246,7 +287,23 @@ export default function JapanTour() {
                     <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
                       <a
                         href={`mailto:hiyorijapaneseclass@gmail.com?subject=${encodeURIComponent(quickLabel)}`}
-                        style={{ display: "inline-block", background: "#f88102ff", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}
+                        style={{
+                          display: "inline-block",
+                          background: "#f88102ff",
+                          color: "#fff",
+                          padding: "10px 14px",
+                          borderRadius: 8,
+                          textDecoration: "none",
+                          fontWeight: 700,
+                          transition: "transform 0.2s ease",
+                          transform: "scale(1)",
+                        }}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1.04)";
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1)";
+                        }}
                       >
                         Send reservation email
                       </a>
