@@ -26,11 +26,11 @@ function PaymentPage() {
   const stripeParam = searchParams.get('stripe') || searchParams.get('stripeUrl')
 
   const stripeMap: Record<string, string> = {
-    '2 Lessons / Month': 'https://buy.stripe.com/test_cNieVfezH8ZP1mYdRd24001',
-    '4 Lessons / Month': 'https://buy.stripe.com/test_5kQeVf2QZ0tj1mY14r24002',
-    '8 Lessons / Month': 'https://buy.stripe.com/test_bJe6oJfDLa3T3v65kH24003',
-    '12 Lessons / Month': 'https://buy.stripe.com/test_28E00l0IR5NDc1C14r24004',
-    'Trial Lesson / 50 minutes': 'https://buy.stripe.com/test_fZueVfbnvgsh7Lm6oL24000',
+    '2 Lessons / Month': 'https://buy.stripe.com/9B614p79ufNqaRVeyS6EU03',
+    '4 Lessons / Month': 'https://buy.stripe.com/3cIfZjeBW7gU1hl9ey6EU02',
+    '8 Lessons / Month': 'https://buy.stripe.com/aFadRbgK41WA2lpbmG6EU01',
+    '12 Lessons / Month': 'https://buy.stripe.com/9B600l0L644I6BF8au6EU00',
+    'Trial Lesson / 50 minutes': 'https://buy.stripe.com/dRmaEZ51m7gU6BFeyS6EU04',
   }
 
   const checkoutUrl = stripeParam || (name ? stripeMap[name] : undefined)
