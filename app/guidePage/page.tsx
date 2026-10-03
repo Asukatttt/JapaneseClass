@@ -9,13 +9,16 @@ interface Tour {
   title: string;
   duration?: string;
   price?: number;
+  additionalPrices?: { duration?: string; price?: number }[];
   description?: string;
+  details?: string[];
   departure?: string;
   image?: string;
 }
 
 const defaultImages = [
   "/images/30817709_m.jpg",
+  "/images/IMG_2966.jpeg",
   "/images/34107071_m.jpg",
   "/images/491243_m.jpg",
   "/images/shibamata.jpg",
@@ -122,7 +125,7 @@ export default function JapanTour() {
           gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
           gap: 24,
           marginTop: "1rem",
-          alignItems: "start",
+          alignItems: "stretch",
         }}
       >
         {tours.map((t, idx) => {
@@ -133,6 +136,12 @@ export default function JapanTour() {
           const priceText = t.price
             ? `JPY ¥${Number(t.price).toLocaleString("ja-JP")}${shortDur ? ` (${shortDur})` : ""}`
             : "";
+          const descriptionStyle = {
+            color: "#374151",
+            fontSize: "1rem",
+            lineHeight: 1.5,
+            margin: "8px 0 0 0",
+          } as const;
 
           return (
             <article
@@ -189,7 +198,12 @@ export default function JapanTour() {
                     {t.title || "Untitled tour"}
                   </h3>
                   <div style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: 8 }}>{t.departure || ""}</div>
-                  <p style={{ color: "#374151", margin: "8px 0 0 0" }}>{t.description || ""}</p>
+                  <p style={descriptionStyle}>{t.description || ""}</p>
+                  {t.details?.map((detail, index) => (
+                    <p key={`${detail}-${index}`} style={descriptionStyle}>
+                      {detail}
+                    </p>
+                  ))}
 
                   {/* Email button */}
                   <div style={{ marginTop: 12, textAlign: "center" }}>
@@ -210,28 +224,61 @@ export default function JapanTour() {
                   </div>
                 </div>
 
-                {/* Price: always centered; show the two-line combined block (first two tours) for every card when available */}
+                {/* Price: show only this tour's own price and duration */}
                 <div style={{ marginTop: 12, width: "100%", flexShrink: 0, display: "flex", justifyContent: "center" }}>
-                  {t.id === "tokyo-daytrip(10-hours)" ? (
-                    <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
-                      <div style={{ display: "block", textAlign: "center" }}>{priceText}</div>
-                    </div>
-                  ) : tours && tours.length >= 2 ? (
-                    <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
-                      <div style={{ display: "block", textAlign: "center" }}>{formatTour(tours[0])}</div>
-                      <div style={{ display: "block", marginTop: 6, textAlign: "center" }}>{formatTour(tours[1])}</div>
-                    </div>
-                  ) : (
-                    <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
-                      <div style={{ display: "block", textAlign: "center" }}>{priceText}</div>
-                    </div>
-                  )}
+                  <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
+                    <div style={{ display: "block", textAlign: "center" }}>{priceText}</div>
+                    {t.additionalPrices?.map((option, index) => {
+                      const optionHours = option.duration?.match(/(\d+)\s*/i)?.[1];
+                      const optionText = option.price
+                        ? `JPY ¥${Number(option.price).toLocaleString("ja-JP")}${optionHours ? ` (${optionHours}h)` : ""}`
+                        : "";
+                      return (
+                        <div key={`${option.duration}-${option.price}-${index}`} style={{ display: "block", marginTop: 6, textAlign: "center" }}>
+                          {optionText}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </article>
           );
         })}
       </div>
+
+      {/* Additional charges and cancellation policy */}
+      <section
+        style={{
+          maxWidth: 900,
+          margin: "1.5rem auto 0",
+          paddingTop: "0.3rem",
+          paddingBottom: "1rem",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          gap: 24,
+          color: "#374151",
+          fontSize: "0.9rem",
+          lineHeight: 1.6,
+        }}
+      >
+        <div>
+          <h3 style={{ margin: "0 0 6px", color: "#1D3658", fontSize: "1rem", fontWeight: 700 }}>
+            ※Additional charge for groups over 4 people
+          </h3>
+          <div>・4h: +JPY ¥7,000 per additional person</div>
+          <div>・7h: +JPY ¥10,000 per additional person</div>
+          <div>・10h: +JPY ¥13,000 per additional person</div>
+        </div>
+        <div>
+          <h3 style={{ margin: "0 0 6px", color: "#1D3658", fontSize: "1rem", fontWeight: 700 }}>
+            ※Cancellation Policy
+          </h3>
+          <div>・15+ days before the tour: Free</div>
+          <div>・8–14 days before the tour: JPY ¥10,000</div>
+          <div>・7 days or less before the tour: 100% of the booking fee</div>
+        </div>
+      </section>
 
       {/* Featured quick-contact row (horizontal) */}
       <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: "1.5rem" }}>

@@ -53,9 +53,9 @@ export default function PriceListPage() {
           <p className="text-3xl font-bold mb-6">
             ${course.price.toLocaleString()} <span className="text-base font-normal">USD</span>
           </p>
-          <p className="mb-8 text-gray-700">
+          {/* <p className="mb-8 text-gray-700">
             {course.name.includes('Trial') ? 'one-time only' : 'per month'}
-          </p>
+          </p> */}
           <button
             onClick={() =>
               router.push(`/payment?price=${course.price}&name=${encodeURIComponent(course.name)}`)
