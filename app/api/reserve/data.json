@@ -5,13 +5,36 @@
       "title": "Private Tokyo highlights tour with Hiyori",
       "duration": "4 hours",
       "price": 30000,
-      "description": "Tsukiji → Asakusa → Shibuya → Harajuku → Meiji Shrine → Shinjuku",
+      "additionalPrices": [
+        {
+          "duration": "7 hours",
+          "price": 50000
+        }
+      ],
+      "description": "Personalized Tokyo Tours Based on Your Interests with Hiyori.",
       "details": [
-        "Pick-up in central Tokyo",
-        "Local snacks included",
-        "Small group (max 8)"
+        "<Example>",
+        "・For 1st time visitors : Tsukiji → Asakusa → Shibuya → Harajuku → Meiji Shrine → Shinjuku.",
+        "・For 2nd or more : Edo-Tokyo Museum → Monzen-Nakacho → Nakano.",
+        "・Bar hopping night tour"
       ]
     },
+    {
+      "id": "tokyo-daytrip(10-hours)",
+      "title": "Day trip to surverb tour with Hiyori",
+      "duration": "10 hours",
+      "price": 70000,
+      "description": "・Hakone",
+      "details": [
+        "・Kamakura",
+        "・Enoshima",
+        "・Narita",
+        "・Nikko",
+        "If you want to go to Kyoto, Osaka or other places, we can discuss"
+      ]
+    }
+  ],
+  "disabledTours": [
     {
       "id": "tokyo-favorites(7-hours)",
       "title": "Hiyori’s favorite Tokyo tour (reccomend for 2nd visit guests)",
@@ -30,18 +53,6 @@
       "duration": "7 hours",
       "price": 50000,
       "description": "Personalized Tokyo Tours Based on Your Interests with Hiyori.",
-      "details": [
-        "Lunch at a local restaurant",
-        "Public transport pass included",
-        "Guided tea ceremony"
-      ]
-    },
-    {
-      "id": "tokyo-daytrip(10-hours)",
-      "title": "Day trip to surverb tour with Hiyori",
-      "duration": "10 hours",
-      "price": 70000,
-      "description": "Day Trips from Tokyo (Hakone, Nikko, Kamakura & Narita) with Hiyori",
       "details": [
         "Lunch at a local restaurant",
         "Public transport pass included",
