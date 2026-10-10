@@ -1,61 +1,27 @@
-/* Tailwind の基本設定 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* グローバルスタイル */
-body {
-  @apply bg-[#F2FAEF] text-[#1D3658] font-sans;
-  margin: 0;
-  padding: 0;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-/* Hero セクション */
-header {
-  @apply min-h-screen flex flex-col justify-center items-center text-center px-6;
-}
+  body {
+    @apply bg-cream font-body text-ink antialiased;
+    margin: 0;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
 
-/* ボタン共通スタイル */
-button {
-  @apply rounded-lg font-semibold shadow-lg transition-transform;
-}
+  h1,
+  h2,
+  h3 {
+    @apply font-heading font-bold;
+    letter-spacing: -0.01em;
+  }
 
-/* フォームスタイル */
-input, button[type="submit"] {
-  @apply border p-3 rounded-lg;
-}
-
-/* セクション共通 */
-section {
-  @apply py-20;
-}
-
-/* カスタム色の背景例 */
-.bg-primary {
-  @apply bg-[#F2FAEF];
-}
-.bg-secondary {
-  @apply bg-[#A7DADC];
-}
-.bg-accent {
-  @apply bg-[#B3D5C0];
-}
-.bg-card {
-  @apply bg-[#F9D1A9] rounded-xl shadow-lg p-8;
-}
-
-/* テキスト色 */
-.text-primary {
-  @apply text-[#1D3658];
-}
-.text-accent {
-  @apply text-[#F2FAEF];
-}
-
-/* SNSリンク */
-a {
-  @apply transition-colors;
-}
-a:hover {
-  @apply scale-105;
+  ::selection {
+    @apply bg-sakura-soft text-ink;
+  }
 }

@@ -1,438 +1,184 @@
-"use client";
+import type { Metadata } from 'next'
+import Image from 'next/image'
+import Script from 'next/script'
+import TourList from '../../components/TourList'
+import { Button, Chip, CtaBand, Section, SectionHeading, hoverLift } from '../../components/ui'
+import { EMAIL } from '../../lib/site'
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Script from 'next/script';
-
-interface Tour {
-  id: string;
-  title: string;
-  duration?: string;
-  price?: number;
-  additionalPrices?: { duration?: string; price?: number }[];
-  description?: string;
-  details?: string[];
-  departure?: string;
-  image?: string;
+export const metadata: Metadata = {
+  title: 'Private Tours',
+  description: 'Private Tokyo tours and day trips with Hiyori, personalized to your interests.',
 }
 
-const defaultImages = [
-  "/images/30817709_m.jpg",
-  "/images/IMG_2966.jpeg",
-  "/images/34107071_m.jpg",
-  "/images/491243_m.jpg",
-  "/images/shibamata.jpg",
-];
+const mail = (subject: string) => `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}`
 
-export default function JapanTour() {
-  const [tours, setTours] = useState<Tour[]>([]);
+const groupRates = [
+  ['4-hour tour', '+¥7,000 per extra guest'],
+  ['7-hour tour', '+¥10,000 per extra guest'],
+  ['10-hour tour', '+¥13,000 per extra guest'],
+]
 
-  useEffect(() => {
-    async function loadTours() {
-      try {
-        const res = await fetch("/api/reserve");
-        const data = await res.json();
-        setTours(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    loadTours();
-  }, []);
+const cancellation = [
+  ['15 or more days before', 'Free'],
+  ['8 to 14 days before', '¥10,000'],
+  ['7 days or less before', '100% of the booking fee'],
+]
 
-  const formatTour = (u?: Tour) => {
-    if (!u) return "";
-    const m = u.duration ? String(u.duration).match(/(\d+)\s*/i) : null;
-    const sd = m ? `${m[1]}h` : "";
-    return u.price ? `JPY ¥${Number(u.price).toLocaleString("ja-JP")}${sd ? ` (${sd})` : ""}` : "";
-  };
+const comingSoon = [
+  'Baseball match',
+  'Japanese sports',
+  'Soba making',
+  'Temple meditation (Zen)',
+  'Japanese art',
+]
 
+function RateTable({ title, rows }: { title: string; rows: string[][] }) {
   return (
-    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 1rem", fontFamily: "system-ui, -apple-system, Roboto, 'Helvetica Neue', Arial" }}>
-      {/* gtag via Next.js Script to ensure it loads client-side after interactive */}
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-2FT8CFF75J" strategy="afterInteractive" />
-      <Script id="gtag-init" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);} 
-        gtag('js', new Date());
-        gtag('config', 'G-2FT8CFF75J');
-      ` }} />
-
-      {/* Back to Home Button */}
-      <div style={{ padding: "1rem 0" }}>
-        <Link
-          href="/"
-          style={{
-            display: "inline-block",
-            background: "#1D3658",
-            color: "#ffffff",
-            padding: "8px 16px",
-            borderRadius: 8,
-            textDecoration: "none",
-            fontWeight: 600,
-            fontSize: "0.95rem",
-          }}
-        >
-          Back to Home
-        </Link>
-      </div>
-
-      {/* HERO */}
-      <div style={{ position: "relative", borderRadius: 8, overflow: "hidden" }}>
-        <img src="/images/491243_m.jpg" alt="Japan" style={{ width: "100%", display: "block" }} />
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            color: "white",
-            padding: "1.25rem",
-            background: "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 100%)",
-          }}
-        >
-          <h1 style={{ margin: "0 0 0.25rem 0", fontWeight: 800, fontSize: "clamp(1.6rem, 6vw, 3rem)", textShadow: "0 2px 8px rgba(0,0,0,0.6)" }}>
-            Welcome to Japan
-          </h1>
-          <p style={{ margin: 0, fontSize: "clamp(1rem, 3.5vw, 1.25rem)", textShadow: "0 1px 6px rgba(0,0,0,0.45)" }}>
-            Tours for Foreign Visitors
-          </p>
-        </div>
-      </div>
-
-      {/* INTRO */}
-      <section style={{ maxWidth: 900, margin: "0 auto", padding: "2.5rem 0 0 0", textAlign: "center" }}>
-        <h2 style={{ margin: 0, fontSize: "clamp(1.05rem, 2.6vw, 1.5rem)", fontWeight: 700 }}>
-          Please choose your favorite tour
-        </h2>
-        <p style={{ margin: "0.5rem 0 0 0", fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)",fontWeight: 700  }}>
-          To make a reservation, please click the email button below.
-        </p>
-      </section>
-
-      {/* PRICES SUMMARY removed — using card-internal combined price element only */}
-
-      {/* TOUR CARDS */}
-      <div
-        id="tours"
-        style={{
-          display: "grid",
-          // auto-fit will create as many columns as will fit, each at least 240px wide.
-          // On wide screens this becomes 4 columns; on smaller screens it will wrap responsively.
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: 24,
-          marginTop: "1rem",
-          alignItems: "stretch",
-        }}
-      >
-        {tours.map((t, idx) => {
-          const imgSrc = t.image || defaultImages[idx % defaultImages.length];
-          // produce a short duration like "4h" from strings like "4 hours" or "7 hours"
-          const durMatch = t.duration ? String(t.duration).match(/(\d+)\s*/i) : null;
-          const shortDur = durMatch ? `${durMatch[1]}h` : "";
-          const priceText = t.price
-            ? `JPY ¥${Number(t.price).toLocaleString("ja-JP")}${shortDur ? ` (${shortDur})` : ""}`
-            : "";
-          const descriptionStyle = {
-            color: "#374151",
-            fontSize: "1rem",
-            lineHeight: 1.5,
-            margin: "8px 0 0 0",
-          } as const;
-
-          return (
-            <article
-              key={t.id}
-              style={{
-                  // let the grid cell control the width; use 100% so cards fill their column
-                  width: "100%",
-                  borderRadius: 12,
-                  overflow: "hidden",
-                  background: "#fff",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  boxShadow: "0 6px 20px rgba(13,34,56,0.06)",
-                  display: "flex",
-                  flexDirection: "column",
-                  transition: "transform 240ms cubic-bezier(.2,.9,.2,1), box-shadow 240ms cubic-bezier(.2,.9,.2,1)",
-                }}
-              onMouseEnter={e => {
-                const article = e.currentTarget as HTMLElement;
-                const img = article.querySelector("img");
-                article.style.transform = "translateY(-8px)";
-                article.style.boxShadow = "0 14px 40px rgba(13,34,56,0.12)";
-                if (img) img.style.transform = "scale(1.10)";
-              }}
-              onMouseLeave={e => {
-                const article = e.currentTarget as HTMLElement;
-                const img = article.querySelector("img");
-                article.style.transform = "translateY(0)";
-                article.style.boxShadow = "0 6px 20px rgba(13,34,56,0.06)";
-                if (img) img.style.transform = "scale(1)";
-              }}
-            >
-              {/* Image */}
-              <div style={{ position: "relative", overflow: "hidden", height: 220 }}>
-                <img
-                  src={imgSrc}
-                  alt={t.title || "Tour image"}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    transition: "transform 240ms ease",
-                    transform: "scale(1)",
-                    willChange: "transform",
-                  }}
-                />
-              </div>
-
-              {/* Body */}
-              <div style={{ gap: 16, padding: 20, flexWrap: "nowrap", alignItems: "flex-start" }}>
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: "1.05rem", fontWeight: 700, margin: "0 0 6px 0", lineHeight: 1.2 }}>
-                    {t.title || "Untitled tour"}
-                  </h3>
-                  <div style={{ color: "#6b7280", fontSize: "0.9rem", marginBottom: 8 }}>{t.departure || ""}</div>
-                  <p style={descriptionStyle}>{t.description || ""}</p>
-                  {t.details?.map((detail, index) => (
-                    <p key={`${detail}-${index}`} style={descriptionStyle}>
-                      {detail}
-                    </p>
-                  ))}
-
-                  {/* Email button */}
-                  <div style={{ marginTop: 12, textAlign: "center" }}>
-                    <a
-                      href={`mailto:hiyorijapaneseclass@gmail.com?subject=${encodeURIComponent("Japan tour: " + (t.title || "Reservation"))}`}
-                      style={{
-                        background: "#10A37F",
-                        padding: "10px 22px",
-                        color: "white",
-                        borderRadius: 8,
-                        display: "inline-block",
-                        textDecoration: "none",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Send reservation email
-                    </a>
-                  </div>
-                </div>
-
-                {/* Price: show only this tour's own price and duration */}
-                <div style={{ marginTop: 12, width: "100%", flexShrink: 0, display: "flex", justifyContent: "center" }}>
-                  <div style={{ display: "inline-block", background: "transparent", padding: "12px 20px", borderRadius: 10, boxShadow: "none", fontWeight: 800, color: "#1D3658", fontSize: "1.1rem", letterSpacing: 0.4, minWidth: 300, maxWidth: "100%", boxSizing: "border-box", textAlign: "center" }}>
-                    <div style={{ display: "block", textAlign: "center" }}>{priceText}</div>
-                    {t.additionalPrices?.map((option, index) => {
-                      const optionHours = option.duration?.match(/(\d+)\s*/i)?.[1];
-                      const optionText = option.price
-                        ? `JPY ¥${Number(option.price).toLocaleString("ja-JP")}${optionHours ? ` (${optionHours}h)` : ""}`
-                        : "";
-                      return (
-                        <div key={`${option.duration}-${option.price}-${index}`} style={{ display: "block", marginTop: 6, textAlign: "center" }}>
-                          {optionText}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-
-      {/* Additional charges and cancellation policy */}
-      <section
-        style={{
-          maxWidth: 900,
-          margin: "1.5rem auto 0",
-          paddingTop: "0.3rem",
-          paddingBottom: "1rem",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          gap: 24,
-          color: "#374151",
-          fontSize: "0.9rem",
-          lineHeight: 1.6,
-        }}
-      >
-        <div>
-          <h3 style={{ margin: "0 0 6px", color: "#1D3658", fontSize: "1rem", fontWeight: 700 }}>
-            ※Additional charge for groups over 4 people
-          </h3>
-          <div>・4h: +JPY ¥7,000 per additional person</div>
-          <div>・7h: +JPY ¥10,000 per additional person</div>
-          <div>・10h: +JPY ¥13,000 per additional person</div>
-        </div>
-        <div>
-          <h3 style={{ margin: "0 0 6px", color: "#1D3658", fontSize: "1rem", fontWeight: 700 }}>
-            ※Cancellation Policy
-          </h3>
-          <div>・15+ days before the tour: Free</div>
-          <div>・8–14 days before the tour: JPY ¥10,000</div>
-          <div>・7 days or less before the tour: 100% of the booking fee</div>
-        </div>
-      </section>
-
-      {/* Featured quick-contact row (horizontal) */}
-      <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: "1.5rem" }}>
-        {(tours && tours.length) ? (
-              tours.slice(0, 2).map((ct, ci) => {
-                // requested short labels per card
-                const quickLabel = ci === 0 ? "Make itinerary for your trip" : "AirPort pick up service";
-                // create the sub-lines; first card: two pricing options, second card: airport details
-                const quickSub = ci === 0 ? (
-                  <>
-                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>~ 3 days JPY ¥{Number(10000).toLocaleString('ja-JP')}</div>
-                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>~ 7 days JPY ¥{Number(20000).toLocaleString('ja-JP')}</div>
-                  </>
-                ) : (
-                  <>
-                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>AirPort - Hotel</div>
-                    <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6, fontWeight: 700 }}>JPY ¥{Number(20000).toLocaleString('ja-JP')} + transportation fee</div>
-                  </>
-                );
-                return (
-                  <div
-                    key={ct.id}
-                    style={{
-                      width: 300,
-                      minWidth: 220,
-                      borderRadius: 12,
-                      overflow: "hidden",
-                      background: "#fff",
-                      border: "1px solid rgba(0,0,0,0.06)",
-                      boxShadow: "0 6px 18px rgba(13,34,56,0.04)",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      padding: 12,
-                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
-                      transform: "translateY(0)",
-                      willChange: "transform",
-                    }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px)";
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 14px 28px rgba(13,34,56,0.10)";
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 6px 18px rgba(13,34,56,0.04)";
-                    }}
-                  >
-                    {/* images intentionally removed per request */}
-                    <div style={{ padding: "12px 6px", textAlign: "center", flex: 1 }}>
-                      <div style={{ fontWeight: 700, fontSize: "1rem", color: "#1D3658" }}>{quickLabel}</div>
-                      {quickSub}
-                    </div>
-                    <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
-                      <a
-                        href={`mailto:hiyorijapaneseclass@gmail.com?subject=${encodeURIComponent(quickLabel)}`}
-                        style={{
-                          display: "inline-block",
-                          background: "#f88102ff",
-                          color: "#fff",
-                          padding: "10px 14px",
-                          borderRadius: 8,
-                          textDecoration: "none",
-                          fontWeight: 700,
-                          transition: "transform 0.2s ease",
-                          transform: "scale(1)",
-                        }}
-                        onMouseEnter={e => {
-                          (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1.04)";
-                        }}
-                        onMouseLeave={e => {
-                          (e.currentTarget as HTMLAnchorElement).style.transform = "scale(1)";
-                        }}
-                      >
-                        Send reservation email
-                      </a>
-                    </div>
-                  </div>
-                );
-              })
-        ) : (
-          // fallback placeholders
-          [1,2].map((n) => (
-            <div key={n} style={{ width: 300, minWidth: 220, borderRadius: 12, overflow: "hidden", background: "#fff", border: "1px solid rgba(0,0,0,0.06)", boxShadow: "0 6px 18px rgba(13,34,56,0.04)", display: "flex", flexDirection: "column", alignItems: "center", padding: 12 }}>
-              <div style={{ width: "100%", height: 110, position: "relative", overflow: "hidden", borderRadius: 8, background: '#efefef' }} />
-              <div style={{ padding: "12px 6px", textAlign: "center", flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: "1rem", color: "#1D3658" }}>Sample tour</div>
-                <div style={{ fontSize: 12, color: "#6b7280", marginTop: 6 }}>Duration</div>
-              </div>
-              <div style={{ width: "100%", textAlign: "center", marginTop: 6 }}>
-                <a style={{ display: "inline-block", background: "#10A37F", color: "#fff", padding: "10px 14px", borderRadius: 8, textDecoration: "none", fontWeight: 700 }}>
-                  Send reservation email
-                </a>
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* Coming soon list (inserted above contact box) */}
-      <div style={{ maxWidth: 600, margin: "2rem auto", padding: 24, background: "#fffef6", borderRadius: 12, textAlign: "left", boxShadow: "0 6px 18px rgba(8,8,9,0.04)", display: "flex", flexDirection: "column", gap: 12 }}>
-        <h3 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 800, color: "#1D3658", textAlign: "center" }}>Coming soon!</h3>
-        <p style={{ margin: "0 0 6px 0", textAlign: "center", color: "#1D3658" }}>New experiences we'll add soon!</p>
-        <ul style={{ margin: 0, paddingLeft: "1.25rem", color: "#374151", lineHeight: 1.6 }}>
-          <li>・Baseball match experience</li>
-          <li>・Japanese sports experience</li>
-          <li>・Soba making experience</li>
-          <li>・Temple meditation ZEN experience</li>
-          <li>・Japanese art experience</li>
-        </ul>
-      </div>
-
-      {/* CONTACT BOX */}
-      <div
-        style={{
-          maxWidth: 600,
-          margin: "2rem auto",
-          padding: 24,
-          background: "#F9D1A9",
-          borderRadius: 12,
-          textAlign: "center",
-          boxShadow: "0 8px 28px rgba(8,8,9,0.06)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 12,
-          transition: "transform 0.2s ease, box-shadow 0.2s ease",  // ← 追加
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
-          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(8,8,9,0.12)";
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 28px rgba(8,8,9,0.06)";
-        }}
-      >
-        <p style={{ color: "#b91c1c", fontSize: "1.05rem", margin: 0, lineHeight: 1.35 }}>
-          If you'd like to discuss schedule or plans, please send an email.
-        </p>
-        <a
-          href="mailto:hiyorijapaneseclass@gmail.com?subject=Japan%20tour:%20Travel%20Plan%20Consultation"
-          style={{
-            display: "inline-block",
-            background: "#1D3658",
-            color: "#F2FAEF",
-            padding: "12px 24px",
-            borderRadius: 10,
-            textDecoration: "none",
-            fontWeight: 700,
-          }}
-        >
-          hiyorijapaneseclass@gmail.com
-        </a>
-      </div>
+    <div className="flex flex-col gap-4">
+      <h3 className="text-[22px]">{title}</h3>
+      <dl className="overflow-hidden rounded-2xl border border-line bg-white">
+        {rows.map(([k, v], i) => (
+          <div
+            key={k}
+            className={`flex flex-col gap-1 px-5 py-4 sm:flex-row sm:items-center sm:justify-between ${
+              i % 2 ? 'bg-sand' : ''
+            }`}
+          >
+            <dt className="text-[15px]">{k}</dt>
+            <dd className="text-[15px] font-bold">{v}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
-  );
+  )
+}
+
+function ExtraCard({
+  title,
+  rows,
+  subject,
+}: {
+  title: string
+  rows: string[][]
+  subject: string
+}) {
+  return (
+    <div className={`flex flex-col gap-5 rounded-3xl border border-line/70 bg-white p-8 shadow-card ${hoverLift}`}>
+      <h3 className="text-[22px]">{title}</h3>
+      <dl className="flex flex-col gap-2.5">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex items-baseline justify-between gap-4">
+            <dt className="text-ink-soft">{k}</dt>
+            <dd className="text-right font-bold">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <Button href={mail(subject)} variant="outline" className="mt-auto self-start">
+        Ask by email
+      </Button>
+    </div>
+  )
+}
+
+export default function GuidePage() {
+  return (
+    <>
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-2FT8CFF75J" strategy="afterInteractive" />
+      <Script
+        id="gtag-init"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-2FT8CFF75J');
+          `,
+        }}
+      />
+
+      <section className="bg-cream px-5 pt-4 md:px-10 md:pt-6">
+        <div className="relative mx-auto flex min-h-[420px] max-w-[1200px] flex-col items-center justify-center gap-5 overflow-hidden rounded-[2rem] px-6 py-16 text-center md:min-h-[520px]">
+          <Image
+            src="/images/491243_m.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1200px) 1200px, 100vw"
+            className="object-cover"
+          />
+          <div aria-hidden className="absolute inset-0 bg-ink/35" />
+          <div className="relative flex flex-col items-center gap-5 text-white">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-peach">Private tours</p>
+            <h1 className="max-w-3xl text-4xl leading-tight sm:text-5xl md:text-[56px]">
+              Private Tokyo tours with Hiyori
+            </h1>
+            <p className="max-w-xl text-lg text-white/90 md:text-[19px]">
+              Personalized tours built around your interests, for first-time and returning visitors.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <Section bg="cream" id="tours">
+        <SectionHeading
+          eyebrow="Tours"
+          title="Choose your tour"
+          sub="To make a reservation, send a request by email from the tour you like."
+        />
+        <div className="mt-12">
+          <TourList />
+        </div>
+      </Section>
+
+      <Section bg="white">
+        <SectionHeading eyebrow="Good to know" title="Group size and cancellations" />
+        <div className="mt-12 grid gap-10 md:grid-cols-2 md:gap-8">
+          <RateTable title="Groups over 4 guests" rows={groupRates} />
+          <RateTable title="Cancellation policy" rows={cancellation} />
+        </div>
+      </Section>
+
+      <Section bg="sand">
+        <SectionHeading eyebrow="Extra services" title="Make your trip easier" />
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <ExtraCard
+            title="Itinerary planning"
+            subject="Make itinerary for your trip"
+            rows={[
+              ['Trips up to 3 days', '¥10,000'],
+              ['Trips up to 7 days', '¥20,000'],
+            ]}
+          />
+          <ExtraCard
+            title="Airport pickup"
+            subject="AirPort pick up service"
+            rows={[
+              ['Airport to hotel', '¥20,000'],
+              ['Transportation fee', 'Charged separately'],
+            ]}
+          />
+        </div>
+        <div className="mt-10 flex flex-col items-center gap-4 rounded-3xl bg-sakura-soft px-6 py-8 text-center">
+          <h3 className="text-[22px]">Coming soon</h3>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {comingSoon.map((s) => (
+              <Chip key={s} className="!bg-white">
+                {s}
+              </Chip>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <CtaBand
+        title="Not sure which tour fits? Let's plan it together."
+        text={`Tell me your dates, group size and interests: ${EMAIL}`}
+      >
+        <Button href={mail('Japan tour: Travel Plan Consultation')} variant="accent">
+          Email Hiyori
+        </Button>
+      </CtaBand>
+    </>
+  )
 }
