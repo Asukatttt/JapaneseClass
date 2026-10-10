@@ -1,105 +1,88 @@
-// app/priceList/page.tsx
-"use client"
+import type { Metadata } from 'next'
+import CopyEmail from '../../../components/CopyEmail'
+import { Bullet, Button, Chip, Eyebrow, Section } from '../../../components/ui'
+import { TRIAL } from '../../../lib/site'
 
-import Link from 'next/link'
-import { motion } from 'framer-motion'
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+export const metadata: Metadata = {
+  title: 'Trial Lesson',
+  description: 'Book a 50-minute trial Japanese lesson with Hiyori sensei for $10.',
 }
 
-// Single hard-coded trial course (includes both Stripe and Wise links)
-const course = {
-  name: 'Trial Lesson / 50 minutes',
-  price: 10,
-  // testデータ用
-  // stripeUrl: 'https://buy.stripe.com/test_3cIfZjeBW7gU1hl9ey6EU02',
-
-  // 正規データ
-  stripeUrl: 'https://buy.stripe.com/dRmaEZ51m7gU6BFeyS6EU04',
-  wiseUrl: 'https://wise.com/pay/me/hiyoria14',
-  color: 'bg-[#FDE2E4]',
-  highlight: false,
-}
-
-export default function PriceListPage() {
-  const handleCheckout = (url: string) => window.open(url, '_blank')
-
+function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
-  <div className="min-h-screen bg-[#F2FAEF] text-[#1D3658] flex flex-col justify-center items-center px-4 py-8">
-    <h1 className="text-6xl font-bold text-center mb-12">Trial Lesson</h1>
-    <h2 className="text-2xl font-bold text-center mb-12">Enjoy Speaking  Japanese with Hiyori sensei! </h2>
-    <div className="max-w-5xl w-full flex justify-center mb-16">
-      <motion.div
-        className={`p-8 rounded-2xl shadow-md text-center cursor-pointer transition-transform hover:scale-105 relative
-            ${course.color} ${course.highlight ? 'border-4 border-[#1D3658] shadow-xl' : ''}`}
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        transition={{ delay: 0 }}
-      >
-        {course.highlight && (
-          <div className="absolute top-[-14px] left-1/2 transform -translate-x-1/2 bg-[#1D3658] text-white text-sm font-semibold px-4 py-1 rounded-full shadow-md">
-            Recommended
+    <li className="flex gap-5 rounded-3xl border border-line/70 bg-white p-6 shadow-card sm:p-7">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-lg font-bold text-white">
+        {n}
+      </span>
+      <div className="flex min-w-0 flex-1 flex-col gap-3">
+        <h2 className="text-[22px]">{title}</h2>
+        {children}
+      </div>
+    </li>
+  )
+}
+
+export default function TrialPage() {
+  return (
+    <Section bg="hero" className="!py-12 md:!py-20">
+      <div className="flex flex-col gap-3">
+        <Eyebrow>Trial lesson</Eyebrow>
+        <h1 className="text-4xl sm:text-5xl">Book your trial lesson</h1>
+        <p className="text-lg text-ink-soft">
+          Enjoy speaking Japanese with Hiyori sensei! It takes three short steps.
+        </p>
+      </div>
+
+      <div className="mt-10 grid items-start gap-10 lg:grid-cols-[1fr_400px]">
+        <ol className="flex flex-col gap-4">
+          <Step n={1} title="Pay for your trial">
+            <p className="leading-relaxed text-ink-soft">
+              Choose the payment method you prefer. Both open in a new tab.
+            </p>
+            <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+              <Button href={TRIAL.stripeUrl} variant="accent">
+                Pay with Stripe
+              </Button>
+              <Button href={TRIAL.wiseUrl} variant="outline">
+                Pay with Wise
+              </Button>
+            </div>
+          </Step>
+          <Step n={2} title="Email Hiyori">
+            <p className="leading-relaxed text-ink-soft">
+              After paying, send an email with the subject{' '}
+              <strong className="text-ink">&quot;Trial Lesson&quot;</strong> and include your name.
+            </p>
+            <CopyEmail />
+          </Step>
+          <Step n={3} title="Pick your time">
+            <p className="leading-relaxed text-ink-soft">
+              Hiyori will reply with a reservation link so you can book the time that suits you.
+            </p>
+          </Step>
+        </ol>
+
+        <aside className="flex flex-col gap-5 rounded-[1.75rem] bg-white p-8 shadow-card lg:sticky lg:top-28">
+          <Chip>Trial lesson</Chip>
+          <p className="flex items-baseline gap-2.5">
+            <span className="font-heading text-6xl font-bold leading-none">${TRIAL.price}</span>
+            <span className="text-[15px] font-medium text-ink-soft">USD, one-time</span>
+          </p>
+          <ul className="flex flex-col gap-2.5">
+            <Bullet>50-minute 1-on-1 online lesson</Bullet>
+            <Bullet>Conversation-focused, beginner-friendly</Bullet>
+            <Bullet>One-time payment</Bullet>
+          </ul>
+          <hr className="border-line" />
+          <div className="flex flex-col gap-1.5">
+            <h2 className="font-body text-sm font-bold">Changes and cancellations</h2>
+            <p className="text-sm leading-relaxed text-ink-soft">
+              Please change or cancel at least 24 hours before your lesson starts. Later cancellations are charged in
+              full.
+            </p>
           </div>
-        )}
-        <h2 className="text-2xl font-semibold mb-4">{course.name}</h2>
-        <p className="text-3xl font-bold mb-6">
-          ${course.price.toLocaleString()} <span className="text-base font-normal">USD</span>
-        </p>
-        <p className="mb-8 text-gray-700">
-          {course.name.includes('Trial') ? 'one-time only' : 'per month'}
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <button
-            onClick={() => handleCheckout(course.stripeUrl)}
-            className="min-w-[140px] bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
-          >
-            Pay Stripe
-          </button>
-          <button
-            onClick={() => handleCheckout(course.wiseUrl)}
-            className="min-w-[140px] bg-[#1D3658] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#447A9C] transition"
-          >
-            Pay Wise
-          </button>
-        </div>
-      </motion.div>
-    </div>
-  <div className="mt-1 container mx-auto px-4 max-w-2xl bg-[#F9D1A9] rounded-xl p-6 shadow-xl">
-      <h2 className="text-2xl font-bold mb-6 text-center text-[#1D3658]">
-        After completing your payment,<br />
-        please send an email to the address below<br />
-        with the subject <span className="underline">"Trial Lesson"</span> and include your name.<br />
-        We will then send you a reservation link.
-      </h2>
-      {/* メール */}
-      <div className="text-center">
-        <div className="flex flex-col items-center mb-2">
-          <span className="text-4xl text-[#1D3658]">&#8595;</span>
-        </div>
-        <a
-          href="mailto:hiyorijapaneseclass@gmail.com"
-          className="text-red-600 text-2xl md:text-3xl font-extrabold hover:text-blue-500 transition-colors break-words whitespace-normal max-w-full"
-        >
-          hiyorijapaneseclass@gmail.com
-        </a>
+        </aside>
       </div>
-      {/* {statusMessage && <p className="mt-4 text-green-600 text-center">{statusMessage}</p>} */}
-    </div>
-      {/* ホームに戻るボタン */}
-      <div className="text-center">
-        <Link href="/top">
-          <motion.button
-            className="mt-5 bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.2 } }}
-          >
-            Back to Page
-          </motion.button>
-        </Link>
-      </div>
-    </div>
+    </Section>
   )
 }

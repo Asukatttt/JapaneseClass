@@ -1,14 +1,13 @@
 'use client'
 
-import { Suspense, useState } from 'react'
-import PaymentComponent from './paymentComponent'
+import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { motion } from 'framer-motion'
+import CopyEmail from '../../components/CopyEmail'
+import { Button, Section } from '../../components/ui'
 
 export default function PaymentPageWrapper() {
   return (
-    <Suspense fallback={<div className="text-center mt-20">Loading...</div>}>
+    <Suspense fallback={<div className="py-20 text-center text-ink-soft">Loading...</div>}>
       <PaymentPage />
     </Suspense>
   )
@@ -18,9 +17,6 @@ function PaymentPage() {
   const searchParams = useSearchParams()
   const price = searchParams.get('price')
   const name = searchParams.get('name')
-  const [copied, setCopied] = useState(false)
-
-  const email = "hiyorijapaneseclass@gmail.com"
 
   // Read stripe URL from query param if provided (preference), otherwise map by plan name
   const stripeParam = searchParams.get('stripe') || searchParams.get('stripeUrl')
@@ -34,78 +30,48 @@ function PaymentPage() {
   }
 
   const checkoutUrl = stripeParam || (name ? stripeMap[name] : undefined)
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch (err) {
-      console.error("Failed to copy email:", err)
-    }
-  }
+  const isTrial = !!name?.includes('Trial')
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#F2FAEF] text-[#1D3658] px-6">
-      <h1 className="text-4xl font-bold mb-6">Payment Page</h1>
+    <Section bg="cream" className="!py-12 md:!py-20">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-8">
+        <h1 className="text-center text-4xl">Payment</h1>
 
-      {price && name ? (
-      <div className="bg-white shadow-md rounded-xl p-8 text-center max-w-md mb-6">
-        <p className="text-2xl font-semibold mb-4">{name}</p>
-        <p className="text-3xl font-bold mb-6">
-          ${price} {name?.includes('Trial') ? '/ one-time' : '/ month'}
-        </p>
-
-        {checkoutUrl ? (
-          <a
-            href={checkoutUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition mb-4"
-          >
-            Proceed to checkout
-          </a>
-        ) : (
-          <div className="block bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold mb-4">No checkout URL available for this plan.</div>
-        )}
-
-          <p className="text-lg text-black-600 font-semibold mt-6">
-            After completing your payment, please contact me at the email below.
-          </p>
-
-          {/* メールアドレス表示部分 */}
-          <div className="mt-4 bg-[#FFF5F5] border-2 border-red-400 rounded-xl p-6 shadow-md flex flex-col items-center gap-3">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">📧</span>
-              <p className="text-xl font-bold text-black">{email}</p>
+        {price && name ? (
+          <div className="flex w-full flex-col gap-6 rounded-[1.75rem] bg-white p-8 shadow-card">
+            <div className="flex flex-col gap-1 text-center">
+              <p className="text-xl font-semibold">{name}</p>
+              <p className="font-heading text-4xl font-bold">
+                ${price} <span className="text-base font-medium text-ink-soft">{isTrial ? '/ one-time' : '/ month'}</span>
+              </p>
             </div>
 
-            {/* Copyボタン（枠内に収める） */}
-            <button
-              onClick={handleCopy}
-              className="bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 transition"
-            >
-              {copied ? "Copied!" : "Copy Email"}
-            </button>
+            {checkoutUrl ? (
+              <Button href={checkoutUrl} variant="accent">
+                Proceed to checkout
+              </Button>
+            ) : (
+              <p className="rounded-full bg-sand px-6 py-3.5 text-center font-semibold text-ink-soft">
+                No checkout URL available for this plan.
+              </p>
+            )}
+
+            <hr className="border-line" />
+
+            <div className="flex flex-col gap-3">
+              <p className="font-semibold">After completing your payment, please contact me at the email below.</p>
+              <CopyEmail />
+              <p className="text-sm text-ink-soft">※ This email address is also listed on the home page.</p>
+            </div>
           </div>
+        ) : (
+          <p className="text-xl text-ink-soft">No plan selected</p>
+        )}
 
-          <p className="text-sm text-gray-500 mt-4">
-            ※ This email address is also listed on the home page.
-          </p>
-        </div>
-      ) : (
-        <p className="text-2xl mb-6">No plan selected</p>
-      )}
-
-      <Link href={name?.includes('Trial') ? '/priceList/trialPage' : '/priceList'}>
-        <motion.button
-          className="bg-[#1D3658] text-[#F2FAEF] font-semibold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition-transform"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1, transition: { duration: 0.6, delay: 0.2 } }}
-        >
+        <Button href={isTrial ? '/priceList/trialPage' : '/priceList'} variant="outline">
           Back to Page
-        </motion.button>
-      </Link>
-    </div>
+        </Button>
+      </div>
+    </Section>
   )
 }
