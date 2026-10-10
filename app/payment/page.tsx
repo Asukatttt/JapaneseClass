@@ -18,9 +18,6 @@ function PaymentPage() {
   const price = searchParams.get('price')
   const name = searchParams.get('name')
 
-  // Read stripe URL from query param if provided (preference), otherwise map by plan name
-  const stripeParam = searchParams.get('stripe') || searchParams.get('stripeUrl')
-
   const stripeMap: Record<string, string> = {
     '2 Lessons / Month': 'https://buy.stripe.com/9B614p79ufNqaRVeyS6EU03',
     '4 Lessons / Month': 'https://buy.stripe.com/3cIfZjeBW7gU1hl9ey6EU02',
@@ -29,7 +26,7 @@ function PaymentPage() {
     'Trial Lesson / 50 minutes': 'https://buy.stripe.com/dRmaEZ51m7gU6BFeyS6EU04',
   }
 
-  const checkoutUrl = stripeParam || (name ? stripeMap[name] : undefined)
+  const checkoutUrl = name ? stripeMap[name] : undefined
   const isTrial = !!name?.includes('Trial')
 
   return (
