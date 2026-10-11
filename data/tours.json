@@ -21,7 +21,7 @@
     },
     {
       "id": "tokyo-daytrip(10-hours)",
-      "title": "Day trip to surverb tour with Hiyori",
+      "title": "Day trip from Tokyo with Hiyori",
       "duration": "10 hours",
       "price": 70000,
       "description": "・Hakone",
@@ -37,7 +37,7 @@
   "disabledTours": [
     {
       "id": "tokyo-favorites(7-hours)",
-      "title": "Hiyori’s favorite Tokyo tour (reccomend for 2nd visit guests)",
+      "title": "Hiyori’s favorite Tokyo tour (recommended for 2nd visit guests)",
       "duration": "7 hours",
       "price": 50000,
       "description": "Example: Edo-Tokyo Museum → Monzen-Nakacho → Nakano",
