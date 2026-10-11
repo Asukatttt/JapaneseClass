@@ -20,8 +20,8 @@ Next.js 15 App Router で作った、日本語レッスンとプライベート�
 
 ## 予約API
 
-`app/api/reserve/route.ts` は `GET` だけで、`app/api/reserve/data.json` の `tours` を毎回ディスクから読んで返す(`components/TourList.tsx` が取得する)。ツアーの名前・料金・詳細の元データはこのJSON。
-以前あったメール送信の `POST` と `nodemailer` は、使われていないため削除した。予約はメール(`mailto:`)で受けている。再び作る場合は、入力チェックと回数制限を付ける。
+`app/api/tours/route.ts` は `GET` だけで、`data/tours.json` の `tours` を返す(`components/TourList.tsx` が取得する)。ツアーの名前・料金・詳細の元データはこのJSON(ビルド時に取り込まれるので、変更したら再デプロイが必要)。
+以前は `/api/reserve` という名前で、メール送信の `POST` もあった。`POST` と `nodemailer` は使われていないため削除し、`/api/reserve` は `next.config.js` で `/api/tours` へリダイレクトしている。予約はメール(`mailto:`)で受けている。メール送信を再び作る場合は、入力チェックと回数制限を付ける。
 
 ## 注意点
 

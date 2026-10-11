@@ -20,8 +20,12 @@ const nextConfig = {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
   async redirects() {
-    // 削除した旧デザインのページ。リンクが残っていても 404 にならないようにする
-    return [{ source: '/japanTour', destination: '/guidePage', permanent: false }]
+    return [
+      // 削除した旧デザインのページ。リンクが残っていても 404 にならないようにする
+      { source: '/japanTour', destination: '/guidePage', permanent: false },
+      // 改名前の API。デプロイ直後に、古い画面(キャッシュ)が呼んでも壊れないようにする
+      { source: '/api/reserve', destination: '/api/tours', permanent: false },
+    ]
   },
 }
 

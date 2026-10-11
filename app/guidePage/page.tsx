@@ -100,7 +100,7 @@ export default function GuidePage() {
       <section className="bg-cream px-5 pt-4 md:px-10 md:pt-6">
         <div className="relative mx-auto flex min-h-[420px] max-w-[1200px] flex-col items-center justify-center gap-5 overflow-hidden rounded-[2rem] px-6 py-16 text-center md:min-h-[520px]">
           <Image
-            src="/images/491243_m.jpg"
+            src="/images/asakusa-kaminarimon.jpg"
             alt=""
             fill
             priority
