@@ -29,9 +29,9 @@ DBは使っていない。MongoDBは無効化したあと、`lib/mongodb.ts` と
 
 決済はStripeのPayment Link方式で、`app/payment/page.tsx` にプラン名ごとの決済URLを直接書いている。プラン名(URLの `name`)から引くだけで、URLでの上書きはできない(悪用を防ぐため削除した)。`stripe` npmパッケージは使っていない。
 
-`Guide-page/` は、ローカルにだけある独立したExpressのデモで、Gitでは管理していない(リポジトリには入っていない)。Next.jsアプリとは無関係で、ビルド対象にも含まれない。
+`package.json` の `overrides` は、`next` が内部で固定している古い `postcss`(8.4.31、脆弱性の指摘あり)を、ルートの `postcss` に揃えるための設定。`next` を更新したら、まだ必要かを確認する(`npm ls postcss` で1つの版だけになっていれば、効いている)。
 
-ルート直下の `install.sh` はClaude Codeのインストーラで、プロジェクトのコードではない。
+過去にあった `Guide-page/`(独立したExpressのデモ)は削除した。`install.sh`(Claude Codeのインストーラ)もリポジトリには入れない。
 
 ## 禁止事項
 
@@ -39,4 +39,3 @@ git操作(commit・push・ブランチ作成など)を行う際は、AskUserQues
 本番環境に関わるデプロイ系の処理(デプロイ、本番への反映など)は、絶対に勝手に行わない。
 依存パッケージの追加・更新・削除(`npm install` や `package.json` の変更)は、ユーザーの承認を得てから行う。
 Stripeの決済URLや料金(`app/payment/page.tsx` など)の変更は、ユーザーの承認を得てから行う。
-`/api/reserve` を実際に呼び出して先生のGmailへメールを送る操作は、テスト目的でも、ユーザーの承認を得てから行う。
