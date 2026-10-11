@@ -16,7 +16,7 @@ Next.js 15 App Router で作った、日本語レッスンとプライベート�
 
 ## ルーティング
 
-`/` はトップで、レッスン用の `/top` とツアー用の `/guidePage` に分かれる。料金は `/priceList` と `/priceList/trialPage`、決済は `/payment`。`/japanTour` は旧デザインのまま残っていて、サイト内からリンクされていない。
+`/` はトップで、レッスン用の `/top` とツアー用の `/guidePage` に分かれる。料金は `/priceList` と `/priceList/trialPage`、決済は `/payment`。旧デザインの `/japanTour` は削除し、`next.config.js` で `/guidePage` へリダイレクトしている。
 
 ## 予約API
 
@@ -25,7 +25,7 @@ Next.js 15 App Router で作った、日本語レッスンとプライベート�
 
 ## 注意点
 
-DBは使っていない。MongoDBは無効化したあと、`lib/mongodb.ts` も削除した(`package.json` に `mongodb` が残っているが、コードからは使っていない)。
+DBは使っていない。MongoDBは無効化したあと、`lib/mongodb.ts` と `mongodb` パッケージも削除した。
 
 決済はStripeのPayment Link方式で、`app/payment/page.tsx` にプラン名ごとの決済URLを直接書いている。プラン名(URLの `name`)から引くだけで、URLでの上書きはできない(悪用を防ぐため削除した)。`stripe` npmパッケージは使っていない。
 

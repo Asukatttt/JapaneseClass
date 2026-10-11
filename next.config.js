@@ -19,6 +19,10 @@ const nextConfig = {
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
+  async redirects() {
+    // 削除した旧デザインのページ。リンクが残っていても 404 にならないようにする
+    return [{ source: '/japanTour', destination: '/guidePage', permanent: false }]
+  },
 }
 
 module.exports = nextConfig
