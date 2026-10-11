@@ -84,7 +84,7 @@ export default function Home() {
           <article className={`flex flex-col overflow-hidden rounded-[1.75rem] border border-line/70 bg-cream shadow-card ${hoverLift}`}>
             <div className="relative h-56">
               <Image
-                src="/images/491243_m.jpg"
+                src="/images/asakusa-kaminarimon.jpg"
                 alt="Kaminarimon gate in Asakusa, Tokyo"
                 fill
                 sizes="(min-width: 768px) 560px, 100vw"
@@ -143,7 +143,7 @@ export default function Home() {
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] shadow-lift ring-1 ring-black/5">
             <Image
-              src="/images/S__23560211.jpg"
+              src="/images/shibuya-sky-selfie.jpg"
               alt="Hiyori with a guest at a Tokyo observation deck"
               fill
               sizes="(min-width: 1024px) 520px, 100vw"

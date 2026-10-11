@@ -18,10 +18,10 @@ interface Tour {
 }
 
 const defaultImages = [
-  '/images/30817709_m.jpg',
-  '/images/IMG_2966.jpeg',
-  '/images/34107071_m.jpg',
-  '/images/491243_m.jpg',
+  '/images/shibuya-109.jpg',
+  '/images/uji-byodoin.jpg',
+  '/images/skytree-asahi.jpg',
+  '/images/asakusa-kaminarimon.jpg',
   '/images/shibamata.jpg',
 ]
 
@@ -59,7 +59,7 @@ export default function TourList() {
   useEffect(() => {
     async function loadTours() {
       try {
-        const res = await fetch('/api/reserve')
+        const res = await fetch('/api/tours')
         setTours(await res.json())
         setStatus('ready')
       } catch (err) {
