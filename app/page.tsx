@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Bullet, Button, Chip, CtaBand, Eyebrow, Section, SectionHeading, hoverLift } from '../components/ui'
+import YouTubeEmbed from '../components/YouTubeEmbed'
 import { EMAIL, SNS, TRIAL, YOUTUBE_INTERVIEW_ID } from '../lib/site'
 
 export default function Home() {
@@ -126,13 +127,11 @@ export default function Home() {
             </Button>
           </div>
           <div className="aspect-video overflow-hidden rounded-3xl bg-ink shadow-lift ring-1 ring-black/5">
-            <iframe
-              className="h-full w-full"
-              src={`https://www.youtube.com/embed/${YOUTUBE_INTERVIEW_ID}`}
+            <YouTubeEmbed
+              videoId={YOUTUBE_INTERVIEW_ID}
               title="Student interview"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
+              poster="/images/interview-thumbnail.jpg"
+              alt="Two people sitting on a bench, one of them waving at the camera"
             />
           </div>
         </div>
